@@ -11,6 +11,7 @@ class Game:
 
     #charger la carte (tmx)
     tmx_data = pytmx.util_pygame.load_pygame('carte.tmx')
+    self.map_name = 'carte'
     map_data = pyscroll.data.TiledMapData(tmx_data)
     map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
     map_layer.zoom = 2
@@ -53,8 +54,9 @@ class Game:
       self.player.change_animation('right')
 
   def switch_to_house(self):
-    #charger la carte (tmx)
+    # Charger la carte (tmx)
     tmx_data = pytmx.util_pygame.load_pygame('house.tmx')
+
     map_data = pyscroll.data.TiledMapData(tmx_data)
     map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
     map_layer.zoom = 2
@@ -72,17 +74,19 @@ class Game:
     self.group.add(self.player)
 
     # Definir event sortie maison
+    self.map_name = 'house'
     enter_house = tmx_data.get_object_by_name('exit_house')
     self.enter_house_rect = pygame.Rect(enter_house.x, enter_house.y, enter_house.width, enter_house.height)
 
     # recuperer le point de spawn
     spawn_house_point = tmx_data.get_object_by_name('spawn_house')
     self.player.position[0] = spawn_house_point.x
-    self.player.position[1] = spawn_house_point.y + 20
+    self.player.position[1] = spawn_house_point.y - 20
 
   def switch_to_world(self):
     #charger la carte (tmx)
     tmx_data = pytmx.util_pygame.load_pygame('carte.tmx')
+    self.map_name = 'carte'
     map_data = pyscroll.data.TiledMapData(tmx_data)
     map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
     map_layer.zoom = 2
@@ -106,15 +110,18 @@ class Game:
     # recuperer le point de spawn
     spawn_house_point = tmx_data.get_object_by_name('enter_house_exit')
     self.player.position[0] = spawn_house_point.x
-    self.player.position[1] = spawn_house_point.y + 20
+    self.player.position[1] = spawn_house_point.y
 
 
   def update(self):
     self.group.update()
 
     # Verification entree dans la maison
-    if self.player.feet.colliderect(self.enter_house_rect):
+    if self.player.feet.colliderect(self.enter_house_rect) and self.map_name == 'carte':
       self.switch_to_house()
+    elif self.player.feet.colliderect(self.enter_house_rect) and self.map_name == 'house':
+      self.switch_to_world()
+
 
     # Verification de la collision
     for sprite in self.group.sprites():

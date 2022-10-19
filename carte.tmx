@@ -386,8 +386,8 @@
   <object id="57" name="collision" x="40.875" y="286.875" width="15.125" height="13.5"/>
   <object id="58" name="collision" x="587.455" y="520.727" width="96.3636" height="29.2727"/>
   <object id="59" name="collision" x="554.182" y="148.364" width="82" height="49.2727"/>
-  <object id="60" name="enter_house" x="570" y="177" width="15.6667" height="29.3333"/>
-  <object id="62" name="enter_house_exit" x="577.667" y="221">
+  <object id="60" name="enter_house" x="570" y="177" width="15.6667" height="25.6666"/>
+  <object id="62" name="enter_house_exit" x="578" y="215.667">
    <point/>
   </object>
  </objectgroup>
